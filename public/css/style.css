@@ -66,7 +66,7 @@ main.night {
     background: none;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
     background-color: rgba(255, 255, 255, 0.5);
-    transition: 0.4s;
+    transition: .4s;
 }
 
 .location-box .location {
@@ -86,12 +86,15 @@ main.night {
 }
 
 .weather-enter-active,
-.weather-leave-active {
+.weather-leave-active .elems-nasa-enter-active,
+.elems-nasa-leave-active {
     transition: opacity .5s;
 }
 
 .weather-enter,
-.weather-leave-to {
+.weather-leave-to,
+.elems-nasa-enter,
+.elems-nasa-leave-to {
     opacity: 0;
 }
 

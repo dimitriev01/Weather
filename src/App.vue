@@ -2,7 +2,7 @@
  <div id="app">
      <main :class="checkBackgroud()">
          <div class="welcome">
-             Погода сейчас! {{ dateBuilderAccurate() }}
+             Погода сейчас! {{ this.timestamp }}
          </div>
          <div class="search-box">
                 <input
@@ -15,7 +15,7 @@
          </div>
         
         <transition name="weather">
-            <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
+            <div key="this.key" class="weather-wrap" v-if="typeof weather.main != 'undefined'">
                 <div class="location-box">
                     <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
                 </div>
@@ -39,11 +39,13 @@
             >
                 Получить данные по API NASA 
             </button>
-            <div class="elems-nasa">
-                  <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
-                  <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
-                  <p :class="visible" class="elem-nasa"> {{ this.nasa.explanation }} </p>
-            </div>
+            <transition name="elems-nasa">
+                <div key="this.key" class="elems-nasa">
+                    <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
+                    <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
+                    <p :class="visible" class="elem-nasa"> {{ this.nasa.explanation }} </p>
+                </div>
+            </transition>
         </div> 
 
      </main>
@@ -63,12 +65,18 @@ export default {
             url_base_weather: "https://api.openweathermap.org/data/2.5/",
             query: '',
             is_day: '',
+            timestamp: '',
+            key: Date.now(),
             weather: {},
             defaultBackgroud: true,
             nasa: {},
             icon: '',
             visible: 'false',
         }
+    },
+    mounted() {
+        this.dateBuilderAccurate();
+        setInterval(this.dateBuilderAccurate, 1000);
     },
     methods: {
         getWeather (e) {
@@ -99,16 +107,16 @@ export default {
             this.nasa = results;
         },
         dateBuilderAccurate () {
-            let d = new Date();
-            let months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-            let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", 'Вс'];
-            let date = d.getDate();
-            let hours = d.getHours();
-            let month = months[d.getMonth()];
-            let year = d.getFullYear() + 'г.';
-            let minutes = d.getMinutes();
-            let sec = d.getSeconds();
-            return `${year}, ${date} ${month}, ${hours}:${minutes}:${sec}`;
+                let d = new Date();
+                let months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", 'Вс'];
+                let date = d.getDate();
+                let hours = d.getHours();
+                let month = months[d.getMonth()];
+                let year = d.getFullYear() + 'г.';
+                let minutes = d.getMinutes();
+                let sec = d.getSeconds();
+                this.timestamp =  `${year}, ${date} ${month}, ${hours}:${minutes}:${sec}`;
         },
         checkTime(){
             let timeOfDay = this.weather.weather[0].icon;
