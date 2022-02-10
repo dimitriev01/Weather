@@ -32,12 +32,16 @@ main.night {
 }
 
 .welcome {
-    color: white;
+    color: #ff9c9c;
     font-size: 32px;
     font-weight: 500;
     text-align: center;
     text-shadow: 1px 3px rgba(0, 0, 0, 0.5);
     padding: 0 0 20px 0;
+}
+
+.search-bar {
+    min-width: 100px;
 }
 
 .search-box,
@@ -53,7 +57,6 @@ main.night {
 
 .search-box .search-bar,
 .nasa {
-    width: 100%;
     text-align: center;
     padding: 15px;
     color: #300;
@@ -82,27 +85,28 @@ main.night {
     text-align: center;
 }
 
+.weather-enter-active,
+.weather-leave-active {
+    transition: opacity .5s;
+}
+
+.weather-enter,
+.weather-leave-to {
+    opacity: 0;
+}
+
 .weather-box {
     text-align: center;
 }
 
-.weather-box .temp {
-    display: inline-block;
-    padding: 10px 25px;
-    color: white;
-    font-size: 102px;
-    font-weight: 900;
-    text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-    background-color: rgb(233 141 141);
-    border-radius: 16px;
-    margin: 30px 0px;
-    box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-}
-
 .weather-box .weather {
     display: flex;
+    border-radius: 10px;
+    margin: 30px 0px;
+    padding: 10px 25px;
     justify-content: center;
     align-items: center;
+    background-color: rgb(233 141 141);
     color: white;
     font-size: 48px;
     font-weight: 700;
@@ -114,6 +118,7 @@ main.night {
     padding: 15px;
     cursor: pointer;
     margin: 20px 0;
+    border-radius: 5px;
     border: 0;
     color: white;
     display: flex;
@@ -128,12 +133,12 @@ main.night {
 
 .nasa {
     margin-top: 20px;
+    width: 100%;
     border-radius: 15px;
 }
 
 .elem-nasa {
     display: block;
-    background: #fad5d5;
     border-radius: 10px;
     font-weight: 500;
     padding: 10px;
@@ -142,4 +147,26 @@ main.night {
 
 .elem-nasa img {
     border-radius: 5px;
+}
+
+@media (max-width: 407px) {
+    .nasa {
+        font-size: 17px;
+    }
+    .weather-box .weather {
+        padding: 5px 15px;
+    }
+}
+
+@media (max-width: 750px) {
+    .weather-box .weather {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .elem-nasa img {
+        height: auto;
+        width: 100%;
+    }
 }

@@ -1,6 +1,6 @@
 <template>
  <div id="app">
-     <main :class="is_day ? 'day' : 'night'">
+     <main :class="checkBackgroud()">
          <div class="welcome">
              Погода сейчас! {{ dateBuilderAccurate() }}
          </div>
@@ -8,23 +8,26 @@
                 <input
                     type="text" 
                     class="search-bar" 
-                    placeholder="Введите город и нажмите Enter..." 
+                    placeholder="Введите город" 
                     v-model="query"
                     @keypress="getWeather"
                 />
          </div>
-         <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-             <div class="location-box">
-                 <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
-             </div>
-             <div class="weather-box">
-                 <div class="temp">{{ Math.round((weather.main.temp - 32) / 1.8) }}°C</div>
-                 <div class="weather">
-                     {{ weather.weather[0].description }}
-                     <img class="icon" :src="getIcon()">
-                 </div>
-             </div>
-         </div>
+        
+        <transition name="weather">
+            <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
+                <div class="location-box">
+                    <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
+                </div>
+                <div class="weather-box">
+                    <div class="weather">
+                        {{ Math.round((weather.main.temp - 32) / 1.8) }}°C
+                        {{ weather.weather[0].description }}
+                        <img class="icon" :src="getIcon()">
+                    </div>  
+                </div>
+            </div>
+        </transition>
 
          <div class="nasa">
             <h3 class="h3-nasa">
@@ -61,6 +64,7 @@ export default {
             query: '',
             is_day: '',
             weather: {},
+            defaultBackgroud: true,
             nasa: {},
             icon: '',
             visible: 'false',
@@ -111,13 +115,21 @@ export default {
 
             if (timeOfDay.includes('n')){
                 this.is_day = false;
+                this.defaultBackgroud = false;
             } else {
                 this.is_day = true;
+                this.defaultBackgroud = false;
             }
         },
         getIcon(){
-           this.icon = this.weather.weather[0].icon;
+            this.icon = this.weather.weather[0].icon;
             return `http://openweathermap.org/img/wn/${this.icon}.png`; 
+        },
+        checkBackgroud(){
+           if (!this.defaultBackgroud){
+               if (this.is_day) return 'day';
+               else return 'night';
+           }
         },
     }
 }
