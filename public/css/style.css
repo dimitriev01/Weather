@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#app {
+    background: none;
+    background-size: cover;
+    background-position: bottom;
+    transition: 0.4s;
+}
+
+main {
+    min-height: 100vh;
+    padding: 25px;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.75));
+}
+
+main.day {
+    background: url('https://www.gorodlaminata.ru/upload/iblock/40f/40f824f9cd0fdca61b99e17bff121b6b.jpg');
+}
+
+main.night {
+    background: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1612554383_209-p-serii-gradientnii-fon-fotoshop-251.jpg  ');
+    background-size: cover;
+    background-position: bottom;
+}
+
+.welcome {
+    color: white;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 1px 3px rgba(0, 0, 0, 0.5);
+    padding: 0 0 20px 0;
+}
+
+.search-box {
+    border: 0;
+    width: 40%;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-box .search-bar {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    color: #300;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: 0.4s;
+}
+
+.location-box .location {
+    color: white;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.location-box .date {
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+}
+
+.weather-box {
+    text-align: center;
+}
+
+.weather-box .temp {
+    display: inline-block;
+    padding: 10px 25px;
+    color: white;
+    font-size: 102px;
+    font-weight: 900;
+    text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+    background-color: rgb(233 141 141);
+    border-radius: 16px;
+    margin: 30px 0px;
+    box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.weather-box .weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
