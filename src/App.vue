@@ -25,6 +25,24 @@
                  </div>
              </div>
          </div>
+
+         <div class="nasa">
+            <h3 class="h3-nasa">
+                Данные, полученные по API NASA 
+            </h3>
+            <button 
+                class="btn-nasa"
+                @click="getNasa"
+            >
+                Получить данные по API NASA 
+            </button>
+            <div class="elems-nasa">
+                  <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
+                  <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
+                  <p :class="visible" class="elem-nasa"> {{ this.nasa.explanation }} </p>
+            </div>
+        </div> 
+
      </main>
  </div>
 </template>
@@ -37,11 +55,15 @@ export default {
     data(){
         return	{
             api_key_weather: `0aa7f8ed193e60c3c4080972bb970326`,
+            api_key_nasa : 'gXj5IgX5hRZpDpIFtPreJpkAXhbFV7trJs6K2F0J',
+            url_base_nasa : 'https://api.nasa.gov/planetary/apod?api_key=', 
             url_base_weather: "https://api.openweathermap.org/data/2.5/",
             query: '',
             is_day: '',
             weather: {},
+            nasa: {},
             icon: '',
+            visible: 'false',
         }
     },
     methods: {
@@ -58,9 +80,19 @@ export default {
                     alert('Введите город!')
             }
         },
+        getNasa () {
+            axios.get(`${this.url_base_nasa}${this.api_key_nasa}`)
+            .then(res => {
+                return res.data;
+            }).then(this.setNasaResults);
+        },
         setWeatherResults (results) {
             this.weather = results;
             this.checkTime();
+        },
+        setNasaResults (results) {
+            this.visible = true;
+            this.nasa = results;
         },
         dateBuilderAccurate () {
             let d = new Date();
