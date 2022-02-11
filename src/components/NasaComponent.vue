@@ -1,19 +1,19 @@
 <template>
     <div class="nasa">
-            <h3 class="h3-nasa">
+            <h3 class="nasa-title__nasa">
                 Данные, полученные по API NASA 
             </h3>
             <button 
-                class="btn-nasa"
+                class="nasa-btn__nasa"
                 @click="getNasa"
             >
                 Получить данные по API NASA 
             </button>
             <transition name="elems-nasa">
-                <div key="this.key" class="elems-nasa">
-                    <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
-                    <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
-                    <p :class="visible" class="elem-nasa"> {{ this.nasa.date }} </p>
+                <div key="this.key" class="nasa-elems__nasa">
+                    <div :class="visible" class="nasa-elems__nasa-elem__nasa">{{ this.nasa.title }} </div>
+                    <p :class="visible" class="nasa-elems__nasa-elem__nasa"><img :src="this.nasa.url" alt=""></p>
+                    <p :class="visible" class="nasa-elems__nasa-elem__nasa"> {{ this.nasa.date }} </p>
                 </div>
             </transition>
         </div> 
@@ -53,7 +53,7 @@ import axios from 'axios';
 
 <style scoped>
 
-.btn-nasa {
+.nasa-btn__nasa {
     padding: 15px;
     cursor: pointer;
     margin: 20px 0;
@@ -66,7 +66,7 @@ import axios from 'axios';
     transition: .3s;
 }
 
-.elem-nasa.false {
+.nasa-elems__nasa-elem__nasa.false {
     display: none;
 }
 
@@ -74,9 +74,6 @@ import axios from 'axios';
     margin-top: 20px;
     width: 100%;
     border-radius: 15px;
-}
-
-.nasa {
     display: flex;
     margin: 0 auto;
     margin-bottom: 30px;
@@ -94,7 +91,7 @@ import axios from 'axios';
     transition: .4s;
 }
 
-.elem-nasa {
+.nasa-elems__nasa-elem__nasa {
     display: block;
     border-radius: 10px;
     font-weight: 500;
@@ -102,9 +99,21 @@ import axios from 'axios';
     margin: 10px auto;
 }
 
-.elem-nasa img {
+.nasa-elems__nasa-elem__nasa img {
     border-radius: 5px;
 }
 
+@media (max-width: 407px) {
+    .nasa {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nasa-elems__nasa-elem__nasa img {
+        height: auto;
+        width: 100%;
+    }
+}
 
 </style>

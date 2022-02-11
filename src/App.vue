@@ -75,25 +75,4 @@ main.night {
     background-position: bottom;
 }
 
-@media (max-width: 407px) {
-    .nasa {
-        font-size: 17px;
-    }
-    .weather-box .weather {
-        padding: 5px 15px;
-    }
-}
-
-@media (max-width: 750px) {
-    .weather-box .weather {
-        font-size: 30px;
-    }
-}
-
-@media (max-width: 1000px) {
-    .elem-nasa img {
-        height: auto;
-        width: 100%;
-    }
-}
 </style>

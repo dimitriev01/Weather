@@ -2,10 +2,10 @@
          <div class="welcome">
              Погода сейчас! Дата : {{ this.timestamp }}
          </div>
-         <div class="search-box">
+         <div class="search__box">
                 <input
                     type="text" 
-                    class="search-bar" 
+                    class="search__box-search__bar" 
                     placeholder="Введите город" 
                     v-model="query"
                     @keypress="getWeather"
@@ -13,15 +13,15 @@
          </div>
         
         <transition name="weather">
-            <div key="this.key" class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-                <div class="location-box">
-                    <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
+            <div key="this.key" class="weather-weather__wrap" v-if="typeof weather.main != 'undefined'">
+                <div class="weather-weather__wrap-location__box">
+                    <div class="weather-weather__wrap-location__box-location">{{ weather.name }}, {{ weather.sys.country }}</div>
                 </div>
-                <div class="weather-box">
-                    <div class="weather">
+                <div class="weather-weather__wrap-weather__box">
+                    <div class="weather-weather__wrap-weather__box-weather">
                         {{ Math.round((weather.main.temp - 32) / 1.8) }}°C
                         {{ weather.weather[0].description }}
-                        <img class="icon" :src="getIcon()">
+                        <img class="weather-weather__wrap-weather__box-weather-icon" :src="getIcon()">
                     </div>  
                 </div>
             </div>
@@ -112,11 +112,11 @@
     padding: 0 0 20px 0;
 }
 
-.search-bar {
+.search__box-search__bar {
     min-width: 100px;
 }
 
-.search-box {
+.search__box {
     border: 0;
     width: 40%;
     display: flex;
@@ -126,7 +126,7 @@
     align-items: center;
 }
 
-.search-box .search-bar{
+.search__box .search__box-search__bar{
     text-align: center;
     padding: 15px;
     color: #300;
@@ -139,7 +139,7 @@
     transition: .4s;
 }
 
-.location-box .location {
+.weather-weather__wrap-location__box .weather-weather__wrap-location__box-location {
     color: white;
     font-size: 32px;
     font-weight: 500;
@@ -147,32 +147,11 @@
     text-shadow: 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.location-box .date {
-    color: white;
-    font-size: 20px;
-    font-weight: 300;
-    font-style: italic;
+.weather-weather__wrap-weather__box {
     text-align: center;
 }
 
-.weather-enter-active,
-.weather-leave-active .elems-nasa-enter-active,
-.elems-nasa-leave-active {
-    transition: opacity .5s;
-}
-
-.weather-enter,
-.weather-leave-to,
-.elems-nasa-enter,
-.elems-nasa-leave-to {
-    opacity: 0;
-}
-
-.weather-box {
-    text-align: center;
-}
-
-.weather-box .weather {
+.weather-weather__wrap-weather__box .weather-weather__wrap-weather__box-weather {
     display: flex;
     border-radius: 10px;
     margin: 30px 0px;
@@ -185,6 +164,18 @@
     font-weight: 700;
     font-style: italic;
     text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 407px) {
+    .weather-weather__wrap-weather__box .weather-weather__wrap-weather__box-weather {
+        padding: 5px 15px;
+    }
+}
+
+@media (max-width: 750px) {
+    .weather-weather__wrap-weather__box .weather-weather__wrap-weather__box-weather {
+        font-size: 30px;
+    }
 }
 
 </style>
