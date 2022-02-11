@@ -13,7 +13,7 @@
                 <div key="this.key" class="elems-nasa">
                     <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
                     <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
-                    <p :class="visible" class="elem-nasa"> {{ this.nasa.explanation }} </p>
+                    <p :class="visible" class="elem-nasa"> {{ this.nasa.date }} </p>
                 </div>
             </transition>
         </div> 
