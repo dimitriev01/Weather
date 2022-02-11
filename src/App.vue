@@ -1,144 +1,99 @@
 <template>
  <div id="app">
      <main :class="checkBackgroud()">
-         <div class="welcome">
-             Погода сейчас! {{ this.timestamp }}
-         </div>
-         <div class="search-box">
-                <input
-                    type="text" 
-                    class="search-bar" 
-                    placeholder="Введите город" 
-                    v-model="query"
-                    @keypress="getWeather"
-                />
-         </div>
-        
-        <transition name="weather">
-            <div key="this.key" class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-                <div class="location-box">
-                    <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
-                </div>
-                <div class="weather-box">
-                    <div class="weather">
-                        {{ Math.round((weather.main.temp - 32) / 1.8) }}°C
-                        {{ weather.weather[0].description }}
-                        <img class="icon" :src="getIcon()">
-                    </div>  
-                </div>
-            </div>
-        </transition>
+         <weather-component
+            @background='getBackground'
+         ></weather-component>
+         <nasa-component
 
-         <div class="nasa">
-            <h3 class="h3-nasa">
-                Данные, полученные по API NASA 
-            </h3>
-            <button 
-                class="btn-nasa"
-                @click="getNasa"
-            >
-                Получить данные по API NASA 
-            </button>
-            <transition name="elems-nasa">
-                <div key="this.key" class="elems-nasa">
-                    <div :class="visible" class="elem-nasa">{{ this.nasa.title }} </div>
-                    <p :class="visible" class="elem-nasa"><img :src="this.nasa.url" alt=""></p>
-                    <p :class="visible" class="elem-nasa"> {{ this.nasa.explanation }} </p>
-                </div>
-            </transition>
-        </div> 
-
+         ></nasa-component>
      </main>
  </div>
 </template>
 
 <script>
-import axios from 'axios';
+import WeatherComponent from '@/components/WeatherComponent'
+import NasaComponent from '@/components/NasaComponent'
 
 export default {
+    components:{
+        WeatherComponent, NasaComponent
+    },
     name: 'App',
     data(){
         return	{
-            api_key_weather: `0aa7f8ed193e60c3c4080972bb970326`,
-            api_key_nasa : 'gXj5IgX5hRZpDpIFtPreJpkAXhbFV7trJs6K2F0J',
-            url_base_nasa : 'https://api.nasa.gov/planetary/apod?api_key=', 
-            url_base_weather: "https://api.openweathermap.org/data/2.5/",
-            query: '',
             is_day: '',
-            timestamp: '',
-            key: Date.now(),
-            weather: {},
             defaultBackgroud: true,
-            nasa: {},
-            icon: '',
-            visible: 'false',
         }
     },
-    mounted() {
-        this.dateBuilderAccurate();
-        setInterval(this.dateBuilderAccurate, 1000);
-    },
     methods: {
-        getWeather (e) {
-            if (e.key == "Enter" && this.query) {
-                
-            axios.get(`${this.url_base_weather}weather?q=${this.query}&lang=ru&units=imperial&appid=${this.api_key_weather}`)
-                .then(res => {
-                    return res.data;
-                }).then(this.setWeatherResults);
-                this.query = '';
-            } else {
-                if (e.key == "Enter") 
-                    alert('Введите город!')
-            }
-        },
-        getNasa () {
-            axios.get(`${this.url_base_nasa}${this.api_key_nasa}`)
-            .then(res => {
-                return res.data;
-            }).then(this.setNasaResults);
-        },
-        setWeatherResults (results) {
-            this.weather = results;
-            this.checkTime();
-        },
-        setNasaResults (results) {
-            this.visible = true;
-            this.nasa = results;
-        },
-        dateBuilderAccurate () {
-                let d = new Date();
-                let months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-                let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", 'Вс'];
-                let date = d.getDate();
-                let hours = d.getHours();
-                let month = months[d.getMonth()];
-                let year = d.getFullYear() + 'г.';
-                let minutes = d.getMinutes();
-                let sec = d.getSeconds();
-                this.timestamp =  `${year}, ${date} ${month}, ${hours}:${minutes}:${sec}`;
-        },
-        checkTime(){
-            let timeOfDay = this.weather.weather[0].icon;
-
-            if (timeOfDay.includes('n')){
-                this.is_day = false;
-                this.defaultBackgroud = false;
-            } else {
-                this.is_day = true;
-                this.defaultBackgroud = false;
-            }
-        },
-        getIcon(){
-            this.icon = this.weather.weather[0].icon;
-            return `http://openweathermap.org/img/wn/${this.icon}.png`; 
-        },
         checkBackgroud(){
            if (!this.defaultBackgroud){
                if (this.is_day) return 'day';
                else return 'night';
            }
         },
+        getBackground(background, is_day){
+            this.defaultBackgroud = background;
+            this.is_day = is_day;
+        },
     }
 }
 </script>
+
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#app {
+    background: none;
+    background-size: cover;
+    background-position: bottom;
+    transition: 0.4s;
+}
+
+main {
+    min-height: 100vh;
+    padding: 25px;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.75));
+}
+
+main.day {
+    background: url('https://www.gorodlaminata.ru/upload/iblock/40f/40f824f9cd0fdca61b99e17bff121b6b.jpg');
+}
+
+main.night {
+    background: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1612554383_209-p-serii-gradientnii-fon-fotoshop-251.jpg  ');
+    background-size: cover;
+    background-position: bottom;
+}
+
+@media (max-width: 407px) {
+    .nasa {
+        font-size: 17px;
+    }
+    .weather-box .weather {
+        padding: 5px 15px;
+    }
+}
+
+@media (max-width: 750px) {
+    .weather-box .weather {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .elem-nasa img {
+        height: auto;
+        width: 100%;
+    }
+}
+</style>
